@@ -74,7 +74,12 @@ def get_grade_by_github_title(github, title):
 
 def assign_grade(github, title, grade):
     """Assign a student a grade on an assignment and print a confirmation."""
-    pass
+    
+    QUERY = """INSERT INTO grades VALUES (:github, :title, :grade)"""
+    db_cursor = db.session.execute(QUERY, {'github': github, 'title': title, 'grade': grade})
+    db.session.commit()
+
+    print "Successfully added score for {} for github user {}.".format(title, github)
 
 
 def handle_input():
@@ -106,6 +111,10 @@ def handle_input():
         elif command == "grade":
             github, title = args
             get_grade_by_github_title(github, title)
+
+        elif command == 'new_grade':
+            github, title, grade = args
+            assign_grade(github, title, grade)
 
         else:
             if command != "quit":

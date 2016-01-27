@@ -103,9 +103,9 @@ ALTER TABLE ONLY projects ALTER COLUMN id SET DEFAULT nextval('projects_id_seq':
 
 COPY grades (student_github, project_title, grade) FROM stdin;
 jhacks	Markov	10
-jhacks	Blockly	2
 sdevelops	Markov	50
 sdevelops	Blockly	100
+jhacks	Blockly	2
 \.
 
 
