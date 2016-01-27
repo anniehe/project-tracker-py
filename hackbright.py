@@ -82,6 +82,21 @@ def assign_grade(github, title, grade):
     print "Successfully added score for {} for github user {}.".format(title, github)
 
 
+def get_all_student_grades(github):
+    """Lists project title and grades for a given student, given their github."""
+
+    QUERY = """
+        SELECT project_title, grade
+        FROM Grades
+        WHERE student_github = :github
+        """
+    db_cursor = db.session.execute(QUERY, {'github': github})
+    rows = db_cursor.fetchall()
+    print "Scores for {}:".format(github)
+    for row in rows:
+        print "Project title: {}, Grade: {}".format(row[0], row[1])
+
+
 def handle_input():
     """Main loop.
 
@@ -115,6 +130,10 @@ def handle_input():
         elif command == 'new_grade':
             github, title, grade = args
             assign_grade(github, title, grade)
+
+        elif command == 'all_grades':
+            github = args[0]
+            get_all_student_grades(github)
 
         else:
             if command != "quit":
